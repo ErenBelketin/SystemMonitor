@@ -7,6 +7,5 @@ bin/
 .vscode/
 package-lock.json
 baslat.bat
-ARKADASINA_NOT.txt
 NOT.txt
 test_cpu_speed.js

@@ -1,0 +1,377 @@
+/* ================================================
+   System Monitor Overlay - Gaming Theme
+   ================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-primary: rgba(8, 8, 16, 0.85);
+  --bg-card: rgba(15, 15, 30, 0.7);
+  --bg-card-hover: rgba(20, 20, 40, 0.8);
+  --border-color: rgba(0, 255, 136, 0.15);
+  --border-glow: rgba(0, 255, 136, 0.3);
+
+  --text-primary: #e0e0e0;
+  --text-secondary: #8892a0;
+  --text-accent: #00ff88;
+
+  --cpu-color: #00d4ff;
+  --gpu-color: #ff6b35;
+  --ram-color: #a855f7;
+  --disk-color: #facc15;
+  --battery-color: #00ff88;
+  --ping-color: #00d4ff;
+  --session-color: #ff3d68;
+
+  --cpu-glow: rgba(0, 212, 255, 0.4);
+  --gpu-glow: rgba(255, 107, 53, 0.4);
+  --ram-glow: rgba(168, 85, 247, 0.4);
+  --disk-glow: rgba(250, 204, 21, 0.4);
+  --battery-glow: rgba(0, 255, 136, 0.4);
+  --ping-glow: rgba(0, 212, 255, 0.4);
+  --session-glow: rgba(255, 61, 104, 0.4);
+
+  --danger-color: #ff3d3d;
+  --warning-color: #ffaa00;
+  --safe-color: #00ff88;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  font-family: 'Rajdhani', sans-serif;
+  color: var(--text-primary);
+  overflow: hidden;
+  -webkit-app-region: no-drag;
+  user-select: none;
+}
+
+.setup-notice {
+  background: rgba(255, 165, 0, 0.15);
+  color: #ffa500;
+  font-size: 11px;
+  text-align: center;
+  padding: 5px;
+  margin: 5px 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 165, 0, 0.3);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.7; }
+  50% { opacity: 1; }
+  100% { opacity: 0.7; }
+}
+
+/* ===== Main Container ===== */
+.overlay-container {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  background: rgba(12, 12, 20, 0.95);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow:
+    0 0 20px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(0, 255, 136, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== Header ===== */
+.overlay-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 4px 0 8px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 8px;
+}
+
+.header-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--text-accent);
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+.header-indicator {
+  width: 20px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--text-accent), transparent);
+  border-radius: 1px;
+}
+
+/* ===== Metric Card ===== */
+.metric-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin-bottom: 5px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  border-radius: 3px 0 0 3px;
+  transition: all 0.3s ease;
+}
+
+.metric-card[data-type="cpu"]::before { background: var(--cpu-color); box-shadow: 0 0 8px var(--cpu-glow); }
+.metric-card[data-type="gpu"]::before { background: var(--gpu-color); box-shadow: 0 0 8px var(--gpu-glow); }
+.metric-card[data-type="ram"]::before { background: var(--ram-color); box-shadow: 0 0 8px var(--ram-glow); }
+.metric-card[data-type="disk"]::before { background: var(--disk-color); box-shadow: 0 0 8px var(--disk-glow); }
+.metric-card[data-type="battery"]::before { background: var(--battery-color); box-shadow: 0 0 8px var(--battery-glow); }
+.metric-card[data-type="ping"]::before { background: var(--ping-color); box-shadow: 0 0 8px var(--ping-glow); }
+.metric-card[data-type="session"]::before { background: var(--session-color); box-shadow: 0 0 8px var(--session-glow); }
+
+/* ===== Metric Header ===== */
+.metric-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 5px;
+}
+
+.metric-icon {
+  font-size: 13px;
+  line-height: 1;
+}
+
+.metric-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--text-secondary);
+  flex: 1;
+}
+
+.metric-value {
+  font-family: 'Orbitron', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  transition: color 0.3s ease;
+}
+
+.metric-value.safe { color: var(--safe-color); }
+.metric-value.warning { color: var(--warning-color); }
+.metric-value.danger { color: var(--danger-color); font-weight: 800; }
+
+/* ===== Progress Bar ===== */
+.progress-bar {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease;
+}
+
+/* Progress bar colors */
+.cpu-fill { background: linear-gradient(90deg, var(--cpu-color), #00a8cc); box-shadow: 0 0 6px var(--cpu-glow); }
+.gpu-fill { background: linear-gradient(90deg, var(--gpu-color), #ff8c42); box-shadow: 0 0 6px var(--gpu-glow); }
+.ram-fill { background: linear-gradient(90deg, var(--ram-color), #c084fc); box-shadow: 0 0 6px var(--ram-glow); }
+.disk-fill { background: linear-gradient(90deg, var(--disk-color), #fde047); box-shadow: 0 0 6px var(--disk-glow); }
+.battery-fill { background: linear-gradient(90deg, var(--battery-color), #00cc6a); box-shadow: 0 0 6px var(--battery-glow); }
+
+/* Danger state for progress bars */
+.progress-fill.danger { background: linear-gradient(90deg, var(--danger-color), #ff6b6b) !important; box-shadow: 0 0 10px rgba(255, 61, 61, 0.5) !important; }
+.progress-fill.warning { background: linear-gradient(90deg, var(--warning-color), #ffcc00) !important; box-shadow: 0 0 10px rgba(255, 170, 0, 0.4) !important; }
+
+/* ===== Metric Details ===== */
+.metric-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detail-item {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.detail-item span {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Ping specific */
+.ping-details {
+  padding-top: 2px;
+}
+
+/* Session specific */
+.session-details {
+  padding-top: 2px;
+}
+
+/* Temperature color coding */
+.temp-safe { color: var(--safe-color) !important; }
+.temp-warning { color: var(--warning-color) !important; }
+.temp-danger { color: var(--danger-color) !important; }
+
+/* ===== Footer ===== */
+.overlay-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 0 2px;
+  margin-top: 4px;
+  border-top: 1px solid var(--border-color);
+}
+
+.uptime-label {
+  font-family: 'Orbitron', monospace;
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
+}
+
+.uptime-label span {
+  color: var(--text-accent);
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* ===== Loading Animation ===== */
+@keyframes loadPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+.loading .metric-value {
+  animation: loadPulse 1.5s ease-in-out infinite;
+}
+
+/* ===== Horizontal Layout Mode ===== */
+.overlay-container.horizontal {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 15px;
+  gap: 15px;
+  background: rgba(10, 10, 18, 0.95);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+.overlay-container.horizontal .overlay-header,
+.overlay-container.horizontal .overlay-footer,
+.overlay-container.horizontal .progress-bar,
+.overlay-container.horizontal .setup-notice {
+  display: none !important;
+}
+
+/* Pure Sleek Bar Styles */
+.overlay-container.horizontal .metric-card {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.overlay-container.horizontal .metric-header {
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.overlay-container.horizontal .metric-label {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--text-accent);
+}
+
+.overlay-container.horizontal .metric-value {
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.overlay-container.horizontal .metric-icon {
+  font-size: 12px;
+}
+
+/* Hide everything except main values in sleek mode */
+.overlay-container.horizontal .metric-details,
+.overlay-container.horizontal .progress-bar,
+.overlay-container.horizontal .overlay-header,
+.overlay-container.horizontal .overlay-footer {
+  display: none !important;
+}
+
+.overlay-container.horizontal i {
+  font-size: 14px !important;
+  color: var(--text-accent);
+}
+
+/* ===== Draggable Mode Styles ===== */
+.overlay-container.unlocked {
+  -webkit-app-region: drag !important;
+  cursor: move !important;
+  border: 1px dashed var(--text-accent) !important;
+  background: rgba(15, 15, 30, 0.98) !important;
+  box-shadow: 0 0 15px var(--text-accent) !important;
+}
+
+/* Ensure text/values don't interfere with dragging in unlocked mode */
+.overlay-container.unlocked .metric-value,
+.overlay-container.unlocked .metric-label,
+.overlay-container.unlocked .metric-icon {
+  pointer-events: none;
+}

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Monitor Overlay</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="overlay-container" id="overlay">
+    <!-- Header -->
+    <div class="overlay-header">
+      <div class="header-indicator"></div>
+      <span class="header-title">SYSTEM MONITOR</span>
+      <div class="header-indicator"></div>
+    </div>
+    <div id="setup-warning" class="setup-notice" style="display: none;">
+      ⚠️ Sensör Köprüsü Hazırlanıyor...
+    </div>
+
+
+    <!-- CPU Section -->
+    <div class="metric-card" data-type="cpu">
+      <div class="metric-header">
+        <span class="metric-icon">🔥</span>
+        <span class="metric-label">CPU</span>
+        <span class="metric-value" id="cpu-load">--%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill cpu-fill" id="cpu-bar" style="width: 0%"></div>
+      </div>
+      <div class="metric-details">
+        <span class="detail-item">🌡️ <span id="cpu-temp">--</span>°C</span>
+        <span class="detail-item">⚡ <span id="cpu-speed">--</span> GHz</span>
+      </div>
+    </div>
+
+    <!-- GPU Section -->
+    <div class="metric-card" data-type="gpu">
+      <div class="metric-header">
+        <span class="metric-icon">🎮</span>
+        <span class="metric-label">GPU</span>
+        <span class="metric-value" id="gpu-util">--%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill gpu-fill" id="gpu-bar" style="width: 0%"></div>
+      </div>
+      <div class="metric-details">
+        <span class="detail-item">🌡️ <span id="gpu-temp">--</span>°C</span>
+        <span class="detail-item">📦 <span id="gpu-vram">--</span> MB</span>
+      </div>
+    </div>
+
+    <!-- RAM Section -->
+    <div class="metric-card" data-type="ram">
+      <div class="metric-header">
+        <span class="metric-icon">💾</span>
+        <span class="metric-label">RAM</span>
+        <span class="metric-value" id="ram-percent">--%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill ram-fill" id="ram-bar" style="width: 0%"></div>
+      </div>
+      <div class="metric-details">
+        <span class="detail-item" id="ram-detail">-- / -- GB</span>
+      </div>
+    </div>
+
+    <!-- Disk Section -->
+    <div class="metric-card" data-type="disk">
+      <div class="metric-header">
+        <span class="metric-icon">💿</span>
+        <span class="metric-label">DISK</span>
+        <span class="metric-value" id="disk-percent">--%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill disk-fill" id="disk-bar" style="width: 0%"></div>
+      </div>
+      <div class="metric-details">
+        <span class="detail-item" id="disk-detail">-- / -- GB</span>
+      </div>
+    </div>
+
+    <!-- Battery Section -->
+    <div class="metric-card" data-type="battery" id="battery-section" style="display: none;">
+      <div class="metric-header">
+        <span class="metric-icon">🔋</span>
+        <span class="metric-label">PİL</span>
+        <span class="metric-value safe" id="battery-percent">--%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill battery-fill safe" id="battery-bar" style="width: 0%"></div>
+      </div>
+      <div class="metric-details">
+        <span class="detail-item" id="battery-status">Fişe Takılı</span>
+      </div>
+    </div>
+
+    <!-- Ping Section -->
+    <div class="metric-card" data-type="ping">
+      <div class="metric-header">
+        <span class="metric-icon">📡</span>
+        <span class="metric-label">PING</span>
+        <span class="metric-value safe" id="ping-value">-- ms</span>
+      </div>
+      <div class="metric-details ping-details">
+        <span class="detail-item" id="ping-status">Bağlanıyor...</span>
+      </div>
+    </div>
+
+    <!-- Session Section -->
+    <div class="metric-card" data-type="session" id="session-section" style="display: none;">
+      <div class="metric-header">
+        <span class="metric-icon">🕹️</span>
+        <span class="metric-label">SEANS</span>
+        <span class="metric-value safe" id="session-time">00:00:00</span>
+      </div>
+      <div class="metric-details session-details">
+        <span class="detail-item" id="session-status">Oyun Bekleniyor</span>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="overlay-footer">
+      <span class="uptime-label">⏱️ <span id="uptime">--</span></span>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

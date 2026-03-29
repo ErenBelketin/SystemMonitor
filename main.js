@@ -17,7 +17,10 @@ let isLocked = true; // Default: click-through for gaming
 let mouseTrackInterval = null;
 
 function startLhm() {
-  const lhmPath = path.join(__dirname, 'bin', 'LibreHardwareMonitor.exe');
+  // In packaged app, extraResources are copied to process.resourcesPath
+  // In dev mode, they are in __dirname
+  const basePath = app.isPackaged ? process.resourcesPath : __dirname;
+  const lhmPath = path.join(basePath, 'bin', 'LibreHardwareMonitor.exe');
   try {
     // Launch LHM minimized/hidden if possible
     lhmProcess = spawn(lhmPath, [], {

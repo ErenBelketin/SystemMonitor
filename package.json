@@ -11,8 +11,21 @@
     "appId": "com.deneme.system-monitor",
     "win": {
       "target": "portable",
-      "icon": "app_icon.png"
+      "icon": "app_icon.png",
+      "requestedExecutionLevel": "requireAdministrator"
     },
+    "extraResources": [
+      {
+        "from": "bin",
+        "to": "bin",
+        "filter": ["**/*"]
+      }
+    ],
+    "files": [
+      "**/*",
+      "!dist/**",
+      "!.git/**"
+    ],
     "directories": {
       "output": "dist"
     }
